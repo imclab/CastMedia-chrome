@@ -1,3 +1,19 @@
+<!--
+// Copyright 2014 Google Inc. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+-->
+
 /**
  * global variables
  */
@@ -11,27 +27,27 @@ var media = [
     {'url':'http://commondatastorage.googleapis.com/gtv-videos-bucket/big_buck_bunny_1080p.mp4',
      'title':'Big Buck Bunny',
      'thumb':'images/bunny.jpg',
-     'metadataType':0,
+     'metadataType':chrome.cast.media.MetadataType.GENERIC,
     },
     {'url':'http://commondatastorage.googleapis.com/gtv-videos-bucket/ED_1280.mp4',
      'title':'Elephant Dream',
      'thumb':'images/ed.jpg',
-     'metadataType':1,
+     'metadataType':chrome.cast.media.MetadataType.TV_SHOW,
     },
     {'url':'http://commondatastorage.googleapis.com/gtv-videos-bucket/tears_of_steel_1080p.mov',
      'title':'Tears of Steel',
      'thumb':'images/Tears.jpg',
-     'metadataType':1,
+     'metadataType':chrome.cast.media.MetadataType.MOVIE,
     },
     {'url':'http://commondatastorage.googleapis.com/gtv-videos-bucket/Google%20IO%202011%2045%20Min%20Walk%20Out.mp3',
      'title':'Google I/O 2011 Audio',
      'thumb':'images/google-io-2011.jpg',
-     'metadataType':3,
+     'metadataType':chrome.cast.media.MetadataType.MUSIC_TRACK,
     },
     {'url':'http://www.videws.com/eureka/castv2/images/San_Francisco_Fog.jpg',
      'title':'San Francisco Fog',
      'thumb':'images/San_Francisco_Fog.jpg',
-     'metadataType':4,
+     'metadataType':chrome.cast.media.MetadataType.PHOTO,
     },
 ];
 
@@ -214,7 +230,7 @@ function loadMedia(currentMediaIndex) {
   var mediaInfo = new chrome.cast.media.MediaInfo(media[currentMediaIndex]['url'], 'video/mp4');
 
   switch(currentMediaIndex) {
-    case 0:
+    case chrome.cast.media.MetadataType.GENERIC:
       mediaInfo.metadata = new chrome.cast.media.GenericMediaMetadata();
       mediaInfo.metadata.metadataType = chrome.cast.media.MetadataType.GENERIC;
       mediaInfo.metadata.subtitle = 'By Blender Foundation';
@@ -222,16 +238,7 @@ function loadMedia(currentMediaIndex) {
       mediaInfo.contentType = 'video/mp4';
       document.getElementById("media_control").style.display = 'block';
       break;
-    case 1:
-      mediaInfo.metadata = new chrome.cast.media.MovieMediaMetadata();
-      mediaInfo.metadata.metadataType = chrome.cast.media.MetadataType.MOVIE;
-      mediaInfo.metadata.subtitle = 'subtitle';
-      mediaInfo.metadata.studio = 'By Blender Foundation';
-      mediaInfo.metadata.releaseDate = '2006';
-      mediaInfo.contentType = 'video/mp4';
-      document.getElementById("media_control").style.display = 'block';
-      break;
-    case 2:
+    case chrome.cast.media.MetadataType.TV_SHOW:
       mediaInfo.metadata = new chrome.cast.media.TvShowMediaMetadata();
       mediaInfo.metadata.metadataType = chrome.cast.media.MetadataType.TV_SHOW;
       mediaInfo.metadata.seriesTitle = 'seriesTitle';
@@ -242,7 +249,16 @@ function loadMedia(currentMediaIndex) {
       mediaInfo.contentType = 'video/mov';
       document.getElementById("media_control").style.display = 'block';
       break;
-    case 3:
+    case chrome.cast.media.MetadataType.MOVIE:
+      mediaInfo.metadata = new chrome.cast.media.MovieMediaMetadata();
+      mediaInfo.metadata.metadataType = chrome.cast.media.MetadataType.MOVIE;
+      mediaInfo.metadata.subtitle = 'subtitle';
+      mediaInfo.metadata.studio = 'By Blender Foundation';
+      mediaInfo.metadata.releaseDate = '2006';
+      mediaInfo.contentType = 'video/mp4';
+      document.getElementById("media_control").style.display = 'block';
+      break;
+    case chrome.cast.media.MetadataType.MUSIC_TRACK:
       mediaInfo.metadata = new chrome.cast.media.MusicTrackMediaMetadata();
       mediaInfo.metadata.metadataType = chrome.cast.media.MetadataType.MUSIC_TRACK;
       mediaInfo.metadata.albumName = 'Album name';
@@ -255,7 +271,7 @@ function loadMedia(currentMediaIndex) {
       mediaInfo.contentType = 'audio/mp3';
       document.getElementById("media_control").style.display = 'block';
       break;
-    case 4:
+    case chrome.cast.media.MetadataType.PHOTO:
       mediaInfo.metadata = new chrome.cast.media.PhotoMediaMetadata();
       mediaInfo.metadata.metadataType = chrome.cast.media.MetadataType.PHOTO;
       mediaInfo.metadata.artist = 'Photo artist';
